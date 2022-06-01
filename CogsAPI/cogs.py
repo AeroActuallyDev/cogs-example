@@ -1,14 +1,12 @@
 from CogsAPI.gateway import start
 from threading import Thread
-from . import request, memory
+from . import request
 
 def init(client):
     """
     Connect to the websocket for CogsAPI, allows users to turn off the bot.
     """
     Thread(target=lambda: start.connect(client)).start()
-    Thread(target=lambda: memory.limit(client)).start()
-
 
 def send_client_message(client, server:str=None, bot:str=None, message=None):
     """

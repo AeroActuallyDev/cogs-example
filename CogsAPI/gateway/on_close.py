@@ -10,4 +10,4 @@ def on_close(ws, close_status_code, close_msg):
     logs.send_console_message(f"Bot <blue>{main.client.user} ({main.client.whitelist})</><yellow> disconnected to API.")
     for x in range(1, 11):
         sleep(1)
-    start.connect()
+    start.connect(main.client)

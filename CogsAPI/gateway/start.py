@@ -1,11 +1,8 @@
 from os import getenv
-from dotenv import load_dotenv
 from . import on_close, on_message, on_open
 import websocket
 
 websocket.enableTrace(False)
-
-load_dotenv("config.env")
 
 def connect(client):
     """
@@ -16,7 +13,7 @@ def connect(client):
                               on_message=on_message.on_message,
                               on_close=on_close.on_close,
                               header={"Authorization": client.whitelist, "server": getenv("SERVER_IDENTIFIER")})
-    client.websocket = ws
+    client.cogs_ws = ws
     ws.run_forever()
 
     

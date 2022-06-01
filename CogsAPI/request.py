@@ -1,8 +1,5 @@
 import requests
 from os import getenv, path
-from dotenv import load_dotenv
-
-load_dotenv("config.env")
 
 def base():
     """

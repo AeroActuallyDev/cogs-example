@@ -1,10 +1,10 @@
 from CogsAPI import cogs, logs, prerequisites
 from discord.ext import commands
-from sys import argv
+from os import getenv
 
 client = commands.Bot(command_prefix="!", self_bot=True)
 
-client.whitelist = argv[1]
+client.whitelist = getenv("WHITELIST")
 prerequisites.define(client)
 
 @client.event

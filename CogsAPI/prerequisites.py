@@ -1,10 +1,12 @@
 from . import settings
-from os import path
+from os import path, getenv
 
 def define(client):
-    client.selfbot = "/".join(path.dirname(path.abspath(__file__)).replace("\\", "/").split("/")[0:-1]) #Path of selfbot
-    client.version = client.selfbot.split("/")[len(client.selfbot.split("/"))-2]+"."+client.selfbot.split("/")[len(client.selfbot.split("/"))-2] #Eg name.version
-    client.selfbot_name = client.version.split(".")[0] #Name of selfbot.
+    client.version = getenv("VERSION")
+    client.branch = getenv("BRANCH")
+    client.selfbot_name = getenv("SELFBOT")
+
+    client.cogs_ws = None
 
     client.account = settings.fetch_account(client)
     client.settings = settings.fetch_settings(client)
