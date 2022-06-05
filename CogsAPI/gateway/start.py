@@ -1,10 +1,12 @@
 from os import getenv
 from . import on_close, on_message, on_open
+from CogsAPI import logs
 import websocket
 
 websocket.enableTrace(False)
 
 def connect(client):
+    logs.process("Attempting gateway connection.")
     """
     Connects to the CogsAPI server and registers the bot to the whitelist.
     """

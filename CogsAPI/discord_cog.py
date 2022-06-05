@@ -1,8 +1,8 @@
 from discord.ext import commands
-from os import getenv, getpid
+from os import getenv, getpid, getenv
 from psutil import Process, virtual_memory, cpu_percent
 from CogsAPI import request, status
-from . import CogsMessager, utility
+from . import CogsMessager
 
 class cog(commands.Cog, description="Manage your bot."):
     def __init__(self, client):
@@ -32,14 +32,10 @@ class cog(commands.Cog, description="Manage your bot."):
 
     @commands.command(aliases=[], usage=None, brief="Get bot server information.")
     async def node(self, ctx):
-        identifier = getenv("SERVER_IDENTIFIER")
         process = Process(getpid())
-        memory = virtual_memory()       
-        with open("/sys/fs/cgroup/memory/memory.limit_in_bytes") as file:
-            max_mem = int(file.read())
-            max_mem_mb = utility.convert_size(max_mem)
-        await CogsMessager.send_plain(ctx, f"Identifier: {identifier}\nAllocated RAM usage: {round(process.memory_info().rss /1024 ** 2,2)}mb/{max_mem_mb} ({round(100*(process.memory_info().rss/max_mem), 2)}%)\nTotal RAM usage: {round((memory.used // 1024 ** 2)/1024, 2)}gb/{round((memory.total // 1024 ** 2)/1024, 2)}gb ({memory.percent}%)\nCPU usage: {cpu_percent()}%\n")
-        
+        memory = virtual_memory()
+        await CogsMessager.send_plain(f"Identifier: {getenv('SERVER_IDENTIFIER')}\nAllocated RAM usage: {round(process.memory_info().rss /1024 ** 2,2)}mb/{getenv('MAX_MEM')}mb ({round(100*((process.memory_info().rss /1024 ** 2)/int(getenv('MAX_MEM'))), 2)}%)\nTotal RAM usage: {round((memory.used // 1024 ** 2)/1024, 2)}gb/{round((memory.total // 1024 ** 2)/1024, 2)}gb ({memory.percent}%)\nCPU usage: {cpu_percent()}%\n")    
+
         
 def setup(client):
     client.add_cog(cog(client))

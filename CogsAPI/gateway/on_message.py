@@ -1,12 +1,12 @@
-from CogsAPI import status
+from CogsAPI import status, cogs, logs
 from json import loads
-import __main__ as main
 
 def on_message(ws, message):
     """
     On API message.
     """
-    client = main.client    
+    logs.process("Recieved message from gateway.")
+    client = cogs.client
     data = loads(message)
     
     segments = data["event"].split(".")

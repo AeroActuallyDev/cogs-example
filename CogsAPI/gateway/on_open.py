@@ -1,8 +1,8 @@
-from CogsAPI import logs
-import __main__ as main
+from CogsAPI import logs, cogs, statistics
 
 def on_open(ws):
     """
     Triggers when API connection starts.
     """
-    logs.send_console_message(f"Bot <blue>{main.client.user} ({main.client.whitelist})</><yellow> connected to API.")
+    statistics.start_loop()
+    logs.send_console_message(f"Bot <blue>{cogs.client.user} ({cogs.client.whitelist})</><yellow> connected to API.")
